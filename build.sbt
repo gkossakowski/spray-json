@@ -18,7 +18,7 @@ scalaVersion := "2.10.1"
 
 scalacOptions <<= scalaVersion map {
   case "2.9.3"  => Seq("-unchecked", "-deprecation", "-encoding", "utf8")
-  case "2.10.1" => Seq("-feature", "-language:implicitConversions", "-unchecked", "-deprecation", "-encoding", "utf8")
+  case _ => Seq("-feature", "-language:implicitConversions", "-unchecked", "-deprecation", "-encoding", "utf8")
 }
 
 resolvers += Opts.resolver.sonatypeReleases
@@ -28,7 +28,7 @@ libraryDependencies <++= scalaVersion { sv =>
     "org.parboiled" %% "parboiled-scala" % "1.1.5" % "compile",
     sv match {
       case "2.9.3"  => "org.specs2" %% "specs2" % "1.12.4.1" % "test"
-      case "2.10.1" => "org.specs2" %% "specs2" % "1.14" % "test"
+      case _ => "org.specs2" %% "specs2" % "2.3.8" % "test"
     }
   )
 }
@@ -59,15 +59,3 @@ publishTo <<= version { version =>
   }
 }
 
-
-///////////////
-// ls-sbt
-///////////////
-
-seq(lsSettings:_*)
-
-(LsKeys.tags in LsKeys.lsync) := Seq("json")
-
-(LsKeys.docsUrl in LsKeys.lsync) := Some(new URL("http://spray.github.com/spray/api/spray-json/"))
-
-(externalResolvers in LsKeys.lsync) := Seq("spray repo" at "http://repo.spray.io")
